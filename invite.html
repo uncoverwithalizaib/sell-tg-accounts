@@ -190,7 +190,7 @@
       twa.BackButton.onClick(() => navigate('index.html'));
     }
 
-    // Try cached link first for instant render
+    // Show cached link immediately while auth loads
     const cached = localStorage.getItem('tg_invite_link');
     if (cached) {
       _inviteLink = cached;
@@ -205,22 +205,23 @@
       document.getElementById('statReferrals').textContent  = user.totalReferrals   || 0;
       document.getElementById('statCommission').textContent = '$' + (user.commissionEarned || 0).toFixed(2);
 
-      // Build invite link from fresh data
-      let botUsername = localStorage.getItem('tg_bot_username') || '';
-      if (!botUsername) {
-        try {
-          const cfg = await fetch(API_BASE + '/config').then(r => r.json());
-          botUsername = cfg.botUsername || '';
-          if (botUsername) localStorage.setItem('tg_bot_username', botUsername);
-        } catch (_) {}
-      }
-
-      if (user.referralCode && botUsername) {
-        _inviteLink = `https://t.me/${botUsername}?start=ref_${user.referralCode}`;
+      // inviteLink is built server-side from BOT_USERNAME + referralCode
+      if (user.inviteLink) {
+        _inviteLink = user.inviteLink;
         document.getElementById('inviteLink').textContent = _inviteLink;
         localStorage.setItem('tg_invite_link', _inviteLink);
       } else if (!cached) {
-        document.getElementById('inviteLink').textContent = 'Link unavailable — check BOT_USERNAME in .env';
+        document.getElementById('inviteLink').textContent = 'Loading link…';
+        // Fallback: fetch fresh /me which also returns inviteLink
+        apiRequest('GET', '/me').then(me => {
+          if (me.inviteLink) {
+            _inviteLink = me.inviteLink;
+            document.getElementById('inviteLink').textContent = _inviteLink;
+            localStorage.setItem('tg_invite_link', _inviteLink);
+          }
+        }).catch(() => {
+          document.getElementById('inviteLink').textContent = 'Could not load link. Restart the app.';
+        });
       }
 
     } catch (err) {

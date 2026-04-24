@@ -1,13 +1,11 @@
 document.addEventListener('DOMContentLoaded', async () => {
   let appVersion = 'v1.0.0';
   let channelUrl = '#';
-  let botUsername = '';
 
   try {
     const cfg = await fetch(API_BASE + '/config').then(r => r.json());
-    appVersion  = cfg.appVersion  || appVersion;
-    channelUrl  = cfg.channelUrl  || channelUrl;
-    botUsername = cfg.botUsername || '';
+    appVersion = cfg.appVersion || appVersion;
+    channelUrl = cfg.channelUrl || channelUrl;
   } catch (_) {}
 
   document.getElementById('versionText').textContent = appVersion;
@@ -52,11 +50,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       badge.style.display = 'inline-block';
     }
 
-    // Store invite link for invite page
-    if (user.referralCode && botUsername) {
-      const link = `https://t.me/${botUsername}?start=ref_${user.referralCode}`;
-      localStorage.setItem('tg_invite_link', link);
-      localStorage.setItem('tg_referral_code', user.referralCode);
+    // Cache invite link (built server-side) for instant display on invite page
+    if (user.inviteLink) {
+      localStorage.setItem('tg_invite_link', user.inviteLink);
     }
 
   } catch (err) {
