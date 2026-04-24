@@ -10,10 +10,10 @@
 <body>
 <div id="app">
 
-  <!-- Profile row -->
-  <div class="profile-section">
+  <!-- Header -->
+  <div class="page-header">
     <div class="avatar">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none"
            stroke="currentColor" stroke-width="2"
            stroke-linecap="round" stroke-linejoin="round">
         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -26,26 +26,46 @@
     </div>
   </div>
 
-  <div class="divider"></div>
+  <!-- Stats strip -->
+  <div class="stats-strip">
+    <div class="stat-block">
+      <div class="stat-num" id="balanceSubtitle">—</div>
+      <div class="stat-lbl">Balance</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-block">
+      <div class="stat-num" id="sellSubtitle">—</div>
+      <div class="stat-lbl">Sold</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-block">
+      <div class="stat-num" id="ordersSubtitle">—</div>
+      <div class="stat-lbl">Pending</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-block">
+      <div class="stat-num" id="commSubtitle">—</div>
+      <div class="stat-lbl">Commission</div>
+    </div>
+  </div>
 
-  <!-- Menu list -->
-  <div class="menu-list">
+  <!-- Action cards -->
+  <div class="card-list">
 
-    <!-- Withdraw Money -->
-    <div class="menu-item" onclick="navigate('withdraw.html')">
-      <div class="menu-icon icon-green">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
-             stroke="#3bc45c" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="5" width="20" height="14" rx="2"/>
-          <line x1="2" y1="10" x2="22" y2="10"/>
+    <!-- Sell Account -->
+    <div class="card-item" onclick="navigate('sell.html')">
+      <div class="card-stripe stripe-blue"></div>
+      <div class="card-icon icon-blue">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#4f8ef0">
+          <path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.5a2.25 2.25 0 0 0 .126 4.237l3.785 1.263 1.263 3.785a2.25 2.25 0 0 0 4.237.126l6.5-16.5a2.25 2.25 0 0 0-2.389-2.626zm-7.02 14.53l-1.112-3.336 3.947-3.947a.75.75 0 0 0-1.06-1.06L12.006 12.567 8.67 11.456l9.892-3.9-4.384 9.407z"/>
         </svg>
       </div>
-      <div class="menu-content">
-        <div class="menu-title">Withdraw Money</div>
-        <div class="menu-subtitle" id="balanceSubtitle">0.00 USDT</div>
+      <div class="card-body">
+        <div class="card-title">Sell Account</div>
+        <div class="card-sub">Submit your number and earn</div>
       </div>
-      <div class="menu-right">
+      <div class="card-right">
+        <span class="badge badge-available">OPEN</span>
         <svg class="arrow-icon" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round">
@@ -54,20 +74,22 @@
       </div>
     </div>
 
-    <!-- Sell Account -->
-    <div class="menu-item" onclick="navigate('sell.html')">
-      <div class="menu-icon icon-blue">
-        <!-- Telegram paper-plane logo -->
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="#4a9eda">
-          <path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.5a2.25 2.25 0 0 0 .126 4.237l3.785 1.263 1.263 3.785a2.25 2.25 0 0 0 4.237.126l6.5-16.5a2.25 2.25 0 0 0-2.389-2.626zm-7.02 14.53l-1.112-3.336 3.947-3.947a.75.75 0 0 0-1.06-1.06L12.006 12.567 8.67 11.456l9.892-3.9-4.384 9.407z"/>
+    <!-- Withdraw -->
+    <div class="card-item" onclick="navigate('withdraw.html')">
+      <div class="card-stripe stripe-green"></div>
+      <div class="card-icon icon-green">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"
+             stroke="#3bc45c" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="5" width="20" height="14" rx="2"/>
+          <line x1="2" y1="10" x2="22" y2="10"/>
         </svg>
       </div>
-      <div class="menu-content">
-        <div class="menu-title">Sell Account</div>
-        <div class="menu-subtitle" id="sellSubtitle">0 sold</div>
+      <div class="card-body">
+        <div class="card-title">Withdraw Money</div>
+        <div class="card-sub">TRX &amp; USDT (BEP-20)</div>
       </div>
-      <div class="menu-right">
-        <span class="badge badge-available">AVAILABLE</span>
+      <div class="card-right">
         <svg class="arrow-icon" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round">
@@ -77,23 +99,50 @@
     </div>
 
     <!-- Orders -->
-    <div class="menu-item" onclick="navigate('orders.html')">
-      <div class="menu-icon icon-red">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
+    <div class="card-item" onclick="navigate('orders.html')">
+      <div class="card-stripe stripe-orange"></div>
+      <div class="card-icon icon-red">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"
              stroke="#e04848" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
           <polyline points="14 2 14 8 20 8"/>
           <line x1="16" y1="13" x2="8" y2="13"/>
           <line x1="16" y1="17" x2="8" y2="17"/>
-          <polyline points="10 9 9 9 8 9"/>
         </svg>
       </div>
-      <div class="menu-content">
-        <div class="menu-title">Orders</div>
-        <div class="menu-subtitle" id="ordersSubtitle">0</div>
+      <div class="card-body">
+        <div class="card-title">My Orders</div>
+        <div class="card-sub">Track your submissions</div>
       </div>
-      <div class="menu-right">
+      <div class="card-right">
+        <svg class="arrow-icon" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Invite & Earn -->
+    <div class="card-item" onclick="navigate('invite.html')">
+      <div class="card-stripe" style="background:#a78bfa"></div>
+      <div class="card-icon" style="background:#1e1040">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"
+             stroke="#a78bfa" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Invite &amp; Earn</div>
+        <div class="card-sub">$0.01 per accepted account</div>
+      </div>
+      <div class="card-right">
+        <span id="referralsBadge" class="badge" style="display:none;background:#1e1040;color:#a78bfa"></span>
         <svg class="arrow-icon" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round">
@@ -103,9 +152,10 @@
     </div>
 
     <!-- Channel -->
-    <div class="menu-item" id="channelItem">
-      <div class="menu-icon icon-orange">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none"
+    <div class="card-item" id="channelItem">
+      <div class="card-stripe stripe-purple"></div>
+      <div class="card-icon icon-orange">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"
              stroke="#e09030" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round">
           <path d="M18 8a5 5 0 0 1 0 8"/>
@@ -114,11 +164,11 @@
           <polygon points="6 15 13 20 13 4 6 9"/>
         </svg>
       </div>
-      <div class="menu-content">
-        <div class="menu-title">Channel</div>
-        <div class="menu-subtitle">Check our channel for latest updates</div>
+      <div class="card-body">
+        <div class="card-title">Channel</div>
+        <div class="card-sub">Latest updates &amp; announcements</div>
       </div>
-      <div class="menu-right">
+      <div class="card-right">
         <svg class="arrow-icon" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round">
@@ -127,7 +177,7 @@
       </div>
     </div>
 
-  </div><!-- /menu-list -->
+  </div><!-- /card-list -->
 
   <div class="version" id="versionText">v1.0.0</div>
 

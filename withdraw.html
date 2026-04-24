@@ -29,13 +29,17 @@
       🟡 USDT<br>
       <span style="font-size:11px;font-weight:400;color:inherit;opacity:.8">BSC (BEP-20)</span>
     </button>
+    <button class="method-btn" data-method="LEADER_CARD">
+      💳 Leader<br>
+      <span style="font-size:11px;font-weight:400;color:inherit;opacity:.8">Leader Card</span>
+    </button>
   </div>
 
   <!-- Withdraw form -->
   <form id="withdrawForm" autocomplete="off">
 
     <div class="form-group">
-      <label class="form-label" for="walletInput">Wallet Address</label>
+      <label class="form-label" for="walletInput" id="addressLabel">Mobile / Wallet Address</label>
       <input
         type="text"
         class="form-input"
@@ -49,7 +53,7 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label" for="amountInput">Amount (USDT)</label>
+      <label class="form-label" for="amountInput">Amount (USD)</label>
       <input
         type="number"
         class="form-input"
@@ -58,7 +62,7 @@
         step="0.01"
         min="0.50"
       >
-      <div class="info-text">Minimum withdrawal: $0.50 USD</div>
+      <div class="info-text">Minimum withdrawal: $0.50</div>
     </div>
 
     <div class="error-msg" id="withdrawError"></div>

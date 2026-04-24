@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Invite &amp; Earn</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    .invite-container { padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; }
+
+    .invite-hero {
+      background: linear-gradient(135deg, #1e1040 0%, #0d1b30 100%);
+      border: 1px solid #2d1a6e;
+      border-radius: 18px;
+      padding: 28px 20px;
+      text-align: center;
+    }
+    .invite-icon { font-size: 3rem; margin-bottom: 12px; }
+    .invite-title { font-size: 1.3rem; font-weight: 700; color: #a78bfa; margin-bottom: 6px; }
+    .invite-sub { font-size: .9rem; color: var(--text-2); line-height: 1.5; }
+
+    .earn-rate {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .earn-rate-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .earn-rate-text { flex: 1; }
+    .earn-rate-amount { font-size: 1.4rem; font-weight: 800; color: #a78bfa; }
+    .earn-rate-desc { font-size: .82rem; color: var(--text-2); margin-top: 2px; }
+
+    .stats-row {
+      display: flex;
+      gap: 10px;
+    }
+    .stat-card {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .stat-card-num { font-size: 1.3rem; font-weight: 800; color: #a78bfa; }
+    .stat-card-lbl { font-size: .75rem; color: var(--text-2); margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+
+    .link-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .link-box-label { font-size: .8rem; color: var(--text-2); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+    .link-display {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: .8rem;
+      color: var(--text-2);
+      word-break: break-all;
+      margin-bottom: 10px;
+      font-family: monospace;
+    }
+    .link-actions { display: flex; gap: 8px; }
+    .btn-copy {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #a78bfa;
+      background: #1e1040;
+      color: #a78bfa;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-copy:active { background: #2d1a6e; }
+    .btn-share {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: #a78bfa;
+      color: #0c0619;
+      font-size: .9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .btn-share:active { opacity: .8; }
+
+    .how-it-works {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+    .how-title { font-size: .85rem; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+    .step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
+    .step:last-child { margin-bottom: 0; }
+    .step-num {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: #1e1040;
+      border: 1px solid #a78bfa;
+      color: #a78bfa;
+      font-size: .75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-text { font-size: .85rem; color: var(--text-2); line-height: 1.4; padding-top: 3px; }
+  </style>
+</head>
+<body>
+<div id="app">
+<div class="invite-container">
+
+  <div class="invite-hero">
+    <div class="invite-icon">🤝</div>
+    <div class="invite-title">Invite &amp; Earn</div>
+    <div class="invite-sub">Share your link. Earn every time a friend's account gets accepted.</div>
+  </div>
+
+  <div class="earn-rate">
+    <div class="earn-rate-icon">💰</div>
+    <div class="earn-rate-text">
+      <div class="earn-rate-amount">$0.01 per account</div>
+      <div class="earn-rate-desc">Credited instantly when your referral's account is approved</div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-card-num" id="statReferrals">—</div>
+      <div class="stat-card-lbl">Friends Invited</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num" id="statCommission">—</div>
+      <div class="stat-card-lbl">Total Earned</div>
+    </div>
+  </div>
+
+  <div class="link-box">
+    <div class="link-box-label">Your Invite Link</div>
+    <div class="link-display" id="inviteLink">Loading…</div>
+    <div class="link-actions">
+      <button class="btn-copy" id="copyBtn" onclick="copyLink()">📋 Copy</button>
+      <button class="btn-share" id="shareBtn" onclick="shareLink()">🚀 Share</button>
+    </div>
+  </div>
+
+  <div class="how-it-works">
+    <div class="how-title">How it works</div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">Share your invite link with friends</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">Friend opens the link and joins the bot</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">Every time their account is accepted, you earn $0.01</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">Commission is added to your balance instantly — withdraw anytime</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script>
+  let _inviteLink = '';
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (twa?.BackButton) {
+      twa.BackButton.show();
+      twa.BackButton.onClick(() => navigate('index.html'));
+    }
+
+    // Try cached link first for instant render
+    const cached = localStorage.getItem('tg_invite_link');
+    if (cached) {
+      _inviteLink = cached;
+      document.getElementById('inviteLink').textContent = cached;
+    }
+
+    try {
+      showLoading(true);
+      const user = await initAuth();
+      showLoading(false);
+
+      document.getElementById('statReferrals').textContent  = user.totalReferrals   || 0;
+      document.getElementById('statCommission').textContent = '$' + (user.commissionEarned || 0).toFixed(2);
+
+      // Build invite link from fresh data
+      let botUsername = localStorage.getItem('tg_bot_username') || '';
+      if (!botUsername) {
+        try {
+          const cfg = await fetch(API_BASE + '/config').then(r => r.json());
+          botUsername = cfg.botUsername || '';
+          if (botUsername) localStorage.setItem('tg_bot_username', botUsername);
+        } catch (_) {}
+      }
+
+      if (user.referralCode && botUsername) {
+        _inviteLink = `https://t.me/${botUsername}?start=ref_${user.referralCode}`;
+        document.getElementById('inviteLink').textContent = _inviteLink;
+        localStorage.setItem('tg_invite_link', _inviteLink);
+      } else if (!cached) {
+        document.getElementById('inviteLink').textContent = 'Link unavailable — check BOT_USERNAME in .env';
+      }
+
+    } catch (err) {
+      showLoading(false);
+      showToast(err.message || 'Failed to load.');
+    }
+  });
+
+  function copyLink() {
+    if (!_inviteLink) return;
+    navigator.clipboard.writeText(_inviteLink).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = '📋 Copy', 2000);
+    }).catch(() => showToast('Copy failed — long-press the link to copy.'));
+  }
+
+  function shareLink() {
+    if (!_inviteLink) return;
+    const text = `Join me on TG Account Seller and earn money! Use my link:\n${_inviteLink}`;
+    if (twa?.openTelegramLink) {
+      twa.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(_inviteLink)}&text=${encodeURIComponent('Join me and earn! 💰')}`);
+    } else if (navigator.share) {
+      navigator.share({ title: 'Invite & Earn', text, url: _inviteLink });
+    } else {
+      copyLink();
+      showToast('Link copied — share it with friends!');
+    }
+  }
+</script>
+</body>
+</html>

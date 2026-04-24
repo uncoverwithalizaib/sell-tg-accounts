@@ -25,7 +25,18 @@ function showStep(n) {
   currentStep = n;
   document.querySelectorAll('.sell-step').forEach(s => s.classList.remove('active'));
   document.getElementById(`step${n}`).classList.add('active');
+  updateDots(n);
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateDots(step) {
+  const wrap = document.getElementById('stepDots');
+  if (!wrap) return;
+  wrap.style.display = step === 4 ? 'none' : 'flex';
+  wrap.querySelectorAll('.step-dot').forEach((dot, i) => {
+    dot.classList.toggle('done', i < step - 1);
+    dot.classList.toggle('active', i === step - 1);
+  });
 }
 
 // ── Step 1: phone ────────────────────────────────────────────────────────────
