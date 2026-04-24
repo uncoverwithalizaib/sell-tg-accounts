@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Sell Account</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+<div id="app">
+<div class="sell-container">
+
+  <!-- Step 1 — Phone number -->
+  <div class="sell-step active" id="step1">
+    <div class="step-title">📱 Enter Phone Number</div>
+    <div class="step-desc">
+      Send the number with country code.<br>
+      Example: <strong>+966501234567</strong><br><br>
+      Make sure you have access to this number right now.
+    </div>
+    <form id="phoneForm" autocomplete="off">
+      <div class="form-group">
+        <label class="form-label" for="phoneInput">Phone Number</label>
+        <input
+          type="tel"
+          class="form-input"
+          id="phoneInput"
+          placeholder="+966501234567"
+          autocomplete="tel"
+          inputmode="tel"
+        >
+      </div>
+      <div class="error-msg" id="phoneError"></div>
+      <button type="submit" class="btn-primary">Send OTP →</button>
+    </form>
+  </div>
+
+  <!-- Step 2 — OTP -->
+  <div class="sell-step" id="step2">
+    <div class="step-title">📨 Enter OTP Code</div>
+    <div class="step-desc">
+      We sent a Telegram verification code to<br>
+      <strong id="otpPhoneLabel"></strong><br><br>
+      Enter the digits from your Telegram app.
+    </div>
+    <form id="otpForm" autocomplete="off">
+      <div class="form-group">
+        <label class="form-label" for="otpInput">OTP Code</label>
+        <input
+          type="text"
+          class="form-input"
+          id="otpInput"
+          placeholder="12345"
+          inputmode="numeric"
+          maxlength="8"
+          pattern="\d{4,8}"
+        >
+      </div>
+      <div class="error-msg" id="otpError"></div>
+      <button type="submit" class="btn-primary">Verify Code →</button>
+    </form>
+  </div>
+
+  <!-- Step 3 — 2FA -->
+  <div class="sell-step" id="step3">
+    <div class="step-title">🔐 2FA Password</div>
+    <div class="step-desc">
+      This account has Two-Factor Authentication enabled.<br>
+      Enter your cloud password to continue.
+    </div>
+    <form id="tfaForm" autocomplete="off">
+      <div class="form-group">
+        <label class="form-label" for="tfaInput">Cloud Password</label>
+        <input
+          type="password"
+          class="form-input"
+          id="tfaInput"
+          placeholder="Your 2FA password"
+          autocomplete="current-password"
+        >
+      </div>
+      <div class="error-msg" id="tfaError"></div>
+      <button type="submit" class="btn-primary">Verify Password →</button>
+    </form>
+  </div>
+
+  <!-- Step 4 — Result -->
+  <div class="sell-step" id="step4">
+    <div class="result-card">
+      <div class="result-icon"  id="resultIcon">✅</div>
+      <div class="result-title" id="resultTitle">Submitted!</div>
+      <div class="result-detail" id="resultDetail"></div>
+    </div>
+    <button class="btn-primary"    onclick="navigate('orders.html')">View My Orders</button>
+    <button class="btn-secondary"  onclick="navigate('index.html')">Back to Home</button>
+  </div>
+
+</div><!-- /.sell-container -->
+</div><!-- /#app -->
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/sell.js"></script>
+</body>
+</html>

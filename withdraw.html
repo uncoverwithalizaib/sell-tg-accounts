@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Withdraw</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+<div id="app">
+<div class="withdraw-container">
+
+  <!-- Balance card -->
+  <div class="balance-card">
+    <div class="balance-label">Available Balance</div>
+    <div class="balance-amount" id="balanceAmount">0.00</div>
+    <div class="balance-unit">USDT</div>
+  </div>
+
+  <!-- Method selector -->
+  <div class="section-label">Payment Method</div>
+  <div class="method-buttons">
+    <button class="method-btn" data-method="TRX">
+      🔴 TRX<br>
+      <span style="font-size:11px;font-weight:400;color:inherit;opacity:.8">Tron (TRC-20)</span>
+    </button>
+    <button class="method-btn" data-method="USDT_BSC">
+      🟡 USDT<br>
+      <span style="font-size:11px;font-weight:400;color:inherit;opacity:.8">BSC (BEP-20)</span>
+    </button>
+  </div>
+
+  <!-- Withdraw form -->
+  <form id="withdrawForm" autocomplete="off">
+
+    <div class="form-group">
+      <label class="form-label" for="walletInput">Wallet Address</label>
+      <input
+        type="text"
+        class="form-input"
+        id="walletInput"
+        placeholder="Select a method first"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+      >
+      <div class="info-text" id="walletHint">Select a payment method above</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="amountInput">Amount (USDT)</label>
+      <input
+        type="number"
+        class="form-input"
+        id="amountInput"
+        placeholder="0.00"
+        step="0.01"
+        min="0.50"
+      >
+      <div class="info-text">Minimum withdrawal: $0.50 USD</div>
+    </div>
+
+    <div class="error-msg" id="withdrawError"></div>
+
+    <button type="submit" class="btn-primary">Submit Withdrawal</button>
+  </form>
+
+</div><!-- /.withdraw-container -->
+</div><!-- /#app -->
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/withdraw.js"></script>
+</body>
+</html>
