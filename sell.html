@@ -26,6 +26,23 @@
       Example: <strong>+966501234567</strong><br><br>
       Make sure you have access to this number right now.
     </div>
+
+    <!-- Accepted countries accordion -->
+    <div class="countries-box" id="countriesBox">
+      <div class="countries-toggle" id="countriesToggle" onclick="toggleCountries()">
+        <span>🌍 Accepted Countries &amp; Prices</span>
+        <svg class="countries-chevron" id="countriesChevron" viewBox="0 0 24 24" width="16" height="16"
+             fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+      <div class="countries-body" id="countriesBody">
+        <div class="countries-loading" id="countriesLoading">Loading…</div>
+        <div class="countries-list" id="countriesList"></div>
+      </div>
+    </div>
+
     <form id="phoneForm" autocomplete="off">
       <div class="form-group">
         <label class="form-label" for="phoneInput">Phone Number</label>

@@ -12,39 +12,41 @@
 
   <!-- Header -->
   <div class="page-header">
-    <div class="avatar">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none"
-           stroke="currentColor" stroke-width="2"
-           stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-        <circle cx="12" cy="7" r="4"/>
-      </svg>
+    <div class="avatar" id="avatarWrap">
+      <span class="skeleton skeleton-avatar" id="avatarSkeleton"></span>
+      <img id="profilePhoto" style="display:none" alt="profile" />
     </div>
     <div class="profile-info">
-      <div class="profile-name" id="profileName">Loading…</div>
+      <div class="profile-name" id="profileName">
+        <span class="skeleton skeleton-text"></span>
+      </div>
       <div class="profile-meta" id="profileMeta"></div>
+      <div class="profile-badges" id="profileBadges" style="display:none">
+        <span class="profile-badge" id="userIdBadge"></span>
+        <span class="profile-badge" id="joinDateBadge"></span>
+      </div>
     </div>
   </div>
 
   <!-- Stats strip -->
   <div class="stats-strip">
     <div class="stat-block">
-      <div class="stat-num" id="balanceSubtitle">—</div>
+      <div class="stat-num" id="balanceSubtitle"><span class="skeleton skeleton-num"></span></div>
       <div class="stat-lbl">Balance</div>
     </div>
     <div class="stat-sep"></div>
     <div class="stat-block">
-      <div class="stat-num" id="sellSubtitle">—</div>
+      <div class="stat-num" id="sellSubtitle"><span class="skeleton skeleton-num"></span></div>
       <div class="stat-lbl">Sold</div>
     </div>
     <div class="stat-sep"></div>
     <div class="stat-block">
-      <div class="stat-num" id="ordersSubtitle">—</div>
+      <div class="stat-num" id="ordersSubtitle"><span class="skeleton skeleton-num"></span></div>
       <div class="stat-lbl">Pending</div>
     </div>
     <div class="stat-sep"></div>
     <div class="stat-block">
-      <div class="stat-num" id="commSubtitle">—</div>
+      <div class="stat-num" id="commSubtitle"><span class="skeleton skeleton-num"></span></div>
       <div class="stat-lbl">Commission</div>
     </div>
   </div>

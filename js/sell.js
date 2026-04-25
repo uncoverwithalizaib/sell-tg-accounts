@@ -16,10 +16,58 @@ document.addEventListener('DOMContentLoaded', async () => {
     showToast(err.message);
   }
 
+  loadCountries();
+
   document.getElementById('phoneForm').addEventListener('submit', handlePhone);
   document.getElementById('otpForm').addEventListener('submit', handleOtp);
   document.getElementById('tfaForm').addEventListener('submit', handleTfa);
 });
+
+// ── Countries accordion ──────────────────────────────────────────────────────
+let countriesOpen = false;
+
+function toggleCountries() {
+  countriesOpen = !countriesOpen;
+  const body    = document.getElementById('countriesBody');
+  const chevron = document.getElementById('countriesChevron');
+  body.style.maxHeight    = countriesOpen ? body.scrollHeight + 'px' : '0';
+  chevron.style.transform = countriesOpen ? 'rotate(180deg)' : '';
+}
+
+async function loadCountries() {
+  const list    = document.getElementById('countriesList');
+  const loading = document.getElementById('countriesLoading');
+  try {
+    const countries = await apiRequest('GET', '/countries');
+    loading.style.display = 'none';
+    if (!countries.length) {
+      list.innerHTML = '<div class="countries-empty">No countries currently active.</div>';
+      return;
+    }
+    list.innerHTML = countries.map(c => {
+      const slots = Math.max(0, c.capacity - (c.todayCount || 0));
+      const full  = slots === 0;
+      return `
+        <div class="country-row${full ? ' country-full' : ''}">
+          <div class="country-left">
+            <span class="country-name">${c.name}</span>
+            <span class="country-prefix">${c.prefix}</span>
+          </div>
+          <div class="country-right">
+            <span class="country-price">$${Number(c.price).toFixed(2)}</span>
+            <span class="country-slots ${full ? 'slots-full' : 'slots-ok'}">${full ? 'Full' : slots + ' left'}</span>
+          </div>
+        </div>`;
+    }).join('');
+    // Update accordion height if already open
+    if (countriesOpen) {
+      document.getElementById('countriesBody').style.maxHeight =
+        document.getElementById('countriesBody').scrollHeight + 'px';
+    }
+  } catch {
+    loading.textContent = 'Could not load countries.';
+  }
+}
 
 function showStep(n) {
   currentStep = n;
